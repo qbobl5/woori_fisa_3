@@ -1,0 +1,14 @@
+* {
+    /* box-sizing: border-box; */
+    box-sizing: content-box;
+}
+
+.box {
+  width: 300px;
+  background-color: skyblue;
+  font-size: 50px;
+  border: dashed 5px beige;
+  padding: 20px;
+  /* padding: 5px 6px 7px 8px; */
+  /* margin-left: 20px; */
+}

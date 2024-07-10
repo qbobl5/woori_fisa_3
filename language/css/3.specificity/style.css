@@ -1,0 +1,19 @@
+h1 {
+    color: yellow;
+}
+
+* {
+    color: red;
+}
+
+p {
+    color: green;
+}
+
+.class-selector {
+    color: brown;
+}
+
+#id-selector {
+    color: gray;
+}
