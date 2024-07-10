@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* class attribute를 선택하는 선택자 . */
+      .internal {
+        color: red;
+      }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- 화면에 보여질 컨텐츠 작성하는 곳 -->
+
+    <!-- inline: tag에 직접 스타일 지정 -->
+    <p style="color: blue">inline style 적용된 css</p>
+
+    <!-- p{internal style 적용된 css} -->
+    <!-- internal: head 태그의 style에서 스타일 지정 -->
+    <p class="internal">Internal style 적용된 css</p>
+
+    <!-- external: 외부 css 파일로 스타일 지정 -->
+    <p class="external">External style 적용된 css</p>
+  </body>
+</html>
