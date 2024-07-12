@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>btn_toggle_connecting</title>
+  </head>
+  <body>
+    <div class="board">
+      <div class="wrap">
+        <input type="checkbox" id="button1" class="button-checkbox" />
+        <label for="button1" class="button"></label>
+      </div>
+      <div class="wrap">
+        <input type="checkbox" id="button2" class="button-checkbox" />
+        <label for="button2" class="button"></label>
+      </div>
+      <div class="wrap">
+        <input type="checkbox" id="button3" class="button-checkbox" />
+        <label for="button3" class="button"></label>
+      </div>
+    </div>
+    <div class="switch">
+      <input type="checkbox" id="toggle" name="toggle" />
+      <label for="toggle">
+        <i class="bulb">
+          <span class="bulb-center"></span>
+          <span class="filament-1"></span>
+          <span class="filament-2"></span>
+          <span class="reflections">
+            <span></span>
+          </span>
+          <span class="sparks">
+            <i class="spark1"></i>
+            <i class="spark2"></i>
+            <i class="spark3"></i>
+            <i class="spark4"></i>
+          </span>
+        </i>
+      </label>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const buttonCheckboxes = document.querySelectorAll(".button-checkbox");
+        const toggle = document.getElementById("toggle");
+
+        function checkButtons() {
+          // 모든 버튼이 눌러진 상태라면 토글이 off가 된다.
+          const allChecked = Array.from(buttonCheckboxes).every(
+            (button) => button.checked
+          );
+          if (allChecked) {
+            toggle.checked = false;
+          } else {
+            toggle.checked = true;
+          }
+        }
+
+        // 버튼이 눌러진 경우 다시 못 누르도록 한다.
+        buttonCheckboxes.forEach((button) => {
+          button.addEventListener("click", function () {
+            if (!this.checked) {
+              event.preventDefault();
+            } else {
+            }
+          });
+
+          button.addEventListener("change", function () {
+            checkButtons();
+          });
+        });
+
+        toggle.addEventListener("click", function () {
+          if (!this.checked) {
+            event.preventDefault();
+          }
+        });
+
+        // 토글이 on 되면 모든 버튼이 다시 올라오도록 한다.
+        toggle.addEventListener("change", function () {
+          if (this.checked) {
+            // Uncheck all button checkboxes
+            buttonCheckboxes.forEach((button) => {
+              button.checked = false;
+            });
+          }
+        });
+
+        checkButtons();
+      });
+    </script>
+  </body>
+</html>
