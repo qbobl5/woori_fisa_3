@@ -1,0 +1,38 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+  cursor: default;
+}
+
+.container {
+  text-align: center;
+}
+
+.title_box {
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.num_box {
+  color: gray;
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+button {
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  font-weight: 600;
+  border: 3px dashed;
+  padding: 10px;
+}
+
+#btn2,
+#btn3 {
+  margin-left: 10px;
+}
