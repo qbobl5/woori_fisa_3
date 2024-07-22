@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div><!-- 앞으로 작성할 react app은 이 <div> 내부에 렌더링됨-->
+    <button class="btn increase">increase</button>
+
+    <script>
+        const component = {
+            count: 0,
+            updateElement() {
+                return `<p>${this.count}</p>`
+            }
+        }
+
+        // 브라우저를 다시 렌더링하는 함수
+        function render(component, element) {
+            element.innerHTML = component.updateElement();
+        }
+
+        console.log("초기 화면이 렌더링됨");
+        render(component, document.getElementById("root"));
+
+        const button = document.querySelector("button");
+        button.addEventListener("click", () => {
+            component.count += 1;
+            console.log("component 가 업데이트 되어 새롭게 렌더링됨");
+            render(component, document.getElementById("root"));
+        })
+    </script>
+</body>
+
+</html>

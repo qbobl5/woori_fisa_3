@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <button class="btn increase">increase</button>
+
+    <script>
+        // React - React 의 최상위 API, React 라이브러리의 진입점
+        // 이번 상태와 마지막 가장 최근 스냅샷과의 차이를 비교해주고
+        // 이 변경사항을 ReactDOM 에게 전달
+        const component = React.createElement("div", null, "div입니다.");
+
+        // ReactDOM 은 React 로부터 전달받은 변경사항을 실제 브라우저에 적용
+        // 실제 브라우저 = Real DOM
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+
+        // counter component
+        // custom component 는 대문자로 시작
+        const Component = props => {
+            return React.createElement("p", null, `${props.count}`);
+        }
+
+        // 초기 화면 rendering
+        root.render(React.createElement(Component, { count: 0 }, null));
+
+        // event 발생에 따라 다시 rendering
+        let i = 0; // count 변수
+        document.querySelector("button").addEventListener("click", () => {
+            root.render(React.createElement(Component, { count: ++i }, null));
+        })        
+    </script>
+</body>
+
+</html>

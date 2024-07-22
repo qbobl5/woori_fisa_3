@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Question component
+        const Question = props => {
+            const [count, setCount] = useState(false);
+            let ch = "+";
+
+            // click button event
+            const clickButton = () => {
+                console.log(count);
+                if (!count) setCount(true);
+                else setCount(false);
+
+            }
+
+            return (
+                <div style={{ textAlign: "left", padding: "10px 20px 10px 20px", margin: "15px", backgroundColor: "white", borderRadius: "10px" }}>
+                    <div style={{ position: "relative" }}>
+                        <h2>{props.title}</h2>
+                        <button onClick={clickButton} style={{ position: "absolute", right: "0", top: "50%", width: "30px", height: "30px", marginTop: "-15px", fontSize: "large" }}>{count ? "-" : "+"}</button>
+                    </div>
+                    <p>{count ? props.info : ""}</p>
+                </div>
+            )
+        }
+
+        // QuestionBoard component
+        const QuestionBoard = () => {
+            return (
+                <div style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center", backgroundColor: "#EFEFEF", borderRadius: "10px", padding: "10px", border: "1px solid" }}>
+                    <h1>Frequently Asked Questions</h1>
+                    <Question title="Is this a good product?"
+                        info="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui facere in labore maxime, assumenda iure sed tenetur alias omnis eveniet similique laborum, neque porro unde ducimus officiis animi vitae! Quidem." />
+                    <Question title="How much does it cost?"
+                        info="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui facere in labore maxime, assumenda iure sed tenetur alias omnis eveniet similique laborum, neque porro unde ducimus officiis animi vitae! Quidem." />
+                    <Question title="When can I get it?"
+                        info="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui facere in labore maxime, assumenda iure sed tenetur alias omnis eveniet similique laborum, neque porro unde ducimus officiis animi vitae! Quidem." />
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<QuestionBoard />);
+    </script>
+</body>
+
+</html>

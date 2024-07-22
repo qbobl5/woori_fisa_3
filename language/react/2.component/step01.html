@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- JSX를 사용하기 위해 필요한 의존성(Babel) 추가 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // component 는 함수로 작성 (함수형 컴포넌트)
+        const MyCustomComponent = () => {
+            const value = "coffee";
+
+            return (
+                <ul>
+                    <h2>Things cats like</h2>
+                    <li>{value}</li>
+                    <li>Tea</li>
+                    <li>Milk</li>
+                </ul> // JSX 문법
+            )
+        }
+
+        /* 화면 렌더링 처리 */
+        // 1. 렌더링할 위치를 ReactDOM 에게 지정
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+
+        // 2. 실제 랜더링 수행
+        root.render(<MyCustomComponent />); // <> 로 감싸서 하나의 컴포넌트의 형태로 작성
+    </script>
+</body>
+
+</html>
