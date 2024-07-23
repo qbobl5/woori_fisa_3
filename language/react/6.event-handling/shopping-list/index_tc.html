@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        //   const createdItems = items.map((item, index) => {
+        //     return <Item item={item} key={index} />;
+        //   });
+        //   console.log(createdItems); 
+        // [<Item item="사과" />, <Item item="짜장면" />, <Item item="고구마" />]
+
+        const ShoppingList = () => {
+
+            // 아이템 요소들을 가진 배열을 상태로 관리
+            const [items, setItems] = useState(["사과", "짜장면", "고구마"]);
+
+            // 아이템 추가 기능
+            const onSubmit = (event) => {
+                // form 태그가 가진 기본 옵션(새로고침)을 비활성화
+                event.preventDefault();
+
+                const form = event.target;
+
+                // input 태그
+                const input = form.item;
+                console.log(input.value);
+
+                const newItems = [...items, input.value];
+                setItems(newItems);
+                form.reset();
+            }
+
+            // 아이템 제거 기능
+            // 지울 아이템을 파라미터로 받음
+            const onRemoveItem = (itemToRemove) => {
+                // TODO: 로직 처리
+
+                // 지울 아이템이 아닌 요소들만 필터링
+                const filteredItems = items.filter(item => {
+                    return item !== itemToRemove
+                });
+                setItems(filteredItems);
+            }
+
+            return (
+                <>
+                    <h1>Shopping List</h1>
+                    <div className="shopping-list">
+                        <h2>Items to Buy</h2>
+                        <form onSubmit={onSubmit}>
+                            <input type="text" name='item' />
+                            <button>Add</button>
+                        </form>
+                        <ul>
+                            {items.map((item, index) => {
+                                return <Item item={item} key={index} onRemoveItem={onRemoveItem} />;
+                            })}
+                        </ul>
+                    </div>
+                </>
+            );
+        };
+
+        const Item = ({ item, onRemoveItem }) => {
+            // const { item } = { item: '고구마' }
+            return (
+                <li>
+                    {item}
+                    <button className="delete"
+                        onClick={() => onRemoveItem(item)}>x</button>
+                </li>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<ShoppingList />);
+    </script>
+</body>
+
+</html>

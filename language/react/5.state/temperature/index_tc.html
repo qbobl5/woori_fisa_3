@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      // 섭씨 화씨를 구분자용 일반 객체
+      const scaleNames = {
+        c: "섭씨",
+        f: "화씨",
+      };
+
+      // 섭씨를 화씨로 변환해주는 함수 toCelsius(섭씨 온도값)
+      function toFahrenheit(celsius) {
+        return (celsius * 9) / 5 + 32;
+      }
+
+      // 화씨를 섭씨로 변환해주는 함수 toCelsius(화씨 온도값)
+      function toCelsius(fahrenheit) {
+        return ((fahrenheit - 32) * 5) / 9;
+      }
+
+      // 실제 온도 변환 수행 및 문자열 값에 대한 유효성 처리 함수 tryConvert(온도값(temperature), toC or toF)
+      function tryConvert(temperature, convert) {
+        // convert : callback function
+        const input = parseFloat(temperature);
+
+        // 만약 사용자가 숫자가 아닌 문자를 입력하였을 경우,
+        if (Number.isNaN(input)) {
+          return "";
+        }
+
+        const output = convert(input);
+        const rounded = Math.round(output * 1000) / 1000;
+        return rounded.toString();
+      }
+
+      const Calculator = () => {
+        const [state, setState] = useState({ temperature: "", scale: "" });
+
+        const changeHanlder = (inputValue, scale) => {
+          console.log(inputValue); // 자식컴포넌트가 파라미터를 통해 전달한 값을 출력
+
+          const updatedState = { temperature: inputValue, scale: scale };
+          setState(updatedState);
+          // temperature 프로퍼티의 값을 바꾼 새로운 객체로 상태(state)를 갱신
+        };
+
+        // props로 내려보내기 전에 변환, 추출 작업을 수행
+        const temperature = state.temperature;
+        const scale = state.scale;
+
+        // 변환 작업
+        const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+        const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+
+        return (
+          <>
+            <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={changeHanlder} />
+            <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={changeHanlder}/>
+            <BoilingVerdict celsius={celsius} />
+          </>
+        );
+      };
+
+      const TemperatureInput = (props) => {
+        // 부모(Calculator)로부터 Props를 통해 전달받은 함수를 자식 컴포넌트에서 호출
+        const inputHandler = (event) => {
+          // inputHandler는 자식 컴포넌트가 가진 자체 함수
+          // event.target.value: 사용자가 <input />에 입력한 값(value)
+          const inputValue = event.target.value; // 입력한 값을 받아왔음
+          const scale = props.scale;
+
+          // 부모함수를 호출
+          props.onTemperatureChange(inputValue, scale);
+        };
+
+        return (
+          <fieldset>
+            <legend>{scaleNames[props.scale]} 온도를 입력하세요 : </legend>
+            <input value={props.temperature} onChange={inputHandler} />
+          </fieldset>
+        );
+      };
+
+      // 입력한 값이 끓는점 온도인지의 여부에 따라 결과값을 분기하는 컴포넌트
+      const BoilingVerdict = (props) => {
+        if (props.celsius >= 100) {
+          // celsius - 섭씨 온도
+          return <p>물이 끓는점 입니다.</p>;
+        }
+        return <p>끓는점이 아직 아닙니다.</p>;
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<Calculator />);
+    </script>
+  </body>
+</html>

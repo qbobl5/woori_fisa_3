@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // temperature component
+        const Temperature = props => {
+            return (
+                <fieldset>
+                    <legend>{props.text} : </legend>
+                    <input type="text" onInput={props.inputHandler} id={props.kv} value={props.chVal} />
+                </fieldset>
+            )
+        }
+
+        // result component
+        const ResultArea = props => {
+            const defaultResult = "끓는 점이 아닙니다.";
+            const changeResult = "물이 끓는 점입니다.";
+
+            return (
+                <p>{props.tem? changeResult:defaultResult}</p>
+            )
+        }
+
+        // temperature board component
+        const TemperatureBoard = () => {
+            const [tem, setTem] = useState(false);
+
+            const changeTemperature = (e) => {
+                const value = e.target.value;
+                const key = e.target.id;
+                
+                if(key == 1) {
+                    if(value >= 100) setTem(true);
+                    else setTem(false);
+                    document.getElementById("2").value = value * (9/5) + 32;
+                } else if(key == 2) {
+                    if(value >= 212) setTem(true);
+                    else setTem(false);
+                    document.getElementById("1").value = (value - 32) / (9/5);
+                }
+            }
+
+            return (
+                <div>
+                <Temperature text="섭씨 온도를 입력하세요" inputHandler={changeTemperature} kv="1" />
+                <Temperature text="화씨 온도를 입력하세요" inputHandler={changeTemperature} kv="2" />
+                <ResultArea tem={tem} />
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<TemperatureBoard />);
+    </script>
+</body>
+
+</html>
